@@ -32,6 +32,7 @@
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
     "file-loader": "^2.0.0",
     "fs-extra": "3.0.1",
     "husky": "^1.1.1",
@@ -51,7 +52,6 @@
     "whatwg-fetch": "2.0.3"
   },
   "peerDependencies": {
-    "eslint-plugin-react": "^7.11.1",
     "react": "^16.5.2",
     "react-redux": "^5.0.7"
   },
