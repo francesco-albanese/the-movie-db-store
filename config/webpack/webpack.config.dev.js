@@ -64,8 +64,7 @@ module.exports = {
           {
             loader: require.resolve('babel-loader'),
             options: {
-              compact: process.env.NODE_ENV === 'production',
-              cacheDirectory: process.env.NODE_ENV === 'development'
+              cacheDirectory: true
             }
           },
           {

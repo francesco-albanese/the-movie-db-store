@@ -125,6 +125,22 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    minimize: true,
+    runtimeChunk: true,
+    removeAvailableModules: true,
+    removeEmptyChunks: true,
+    mergeDuplicateChunks: true,
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
+  },
   plugins: [
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
@@ -132,7 +148,7 @@ module.exports = {
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
     /**
-     * Plugin which analyses the bundle size and gives details information about the dependencies
+     * Plugin which analyses the bundle size and gives detailed information about the dependencies
      */
     new BundleAnalyzerPlugin()
   ],
