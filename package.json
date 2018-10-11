@@ -1,11 +1,17 @@
 {
-  "name": "@themoviedb/the-movie-db-fetching",
+  "name": "@themoviedb/the-movie-db-store",
   "version": "1.0.0",
   "private": true,
   "main": "build/index.js",
-  "description": "A package to fetch data from APIs 🤹‍♂",
+  "description": "A package to initialise Redux store and reducers 🤹‍♂",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "redux": "^4.0.0",
+    "redux-form": "^7.4.2",
+    "redux-logger": "^3.0.6",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -38,6 +44,8 @@
     "object-assign": "^4.1.1",
     "promise": "^8.0.2",
     "raf": "3.4.0",
+    "react": "^16.5.2",
+    "react-redux": "^5.0.7",
     "react-dev-utils": "^6.0.4",
     "resolve": "^1.8.1",
     "sw-precache-webpack-plugin": "^0.11.5",

@@ -38,7 +38,7 @@ module.exports = {
     // The build folder.
     path: paths.appBuild,
     filename: '[name].js',
-    library: 'The-movie-db-fetching',
+    library: 'The-movie-db-store',
     libraryTarget: 'umd'
   },
   resolve: {
