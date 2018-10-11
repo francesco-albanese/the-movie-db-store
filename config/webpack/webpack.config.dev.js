@@ -1,8 +1,8 @@
+process.env.BABEL_ENV = 'development'
+process.env.NODE_ENV = 'development'
 
 const path = require('path')
 const webpack = require('webpack')
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const getClientEnvironment = require('../env/env')
@@ -22,55 +22,24 @@ const env = getClientEnvironment(publicUrl)
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  entry: [
-    // We ship a few polyfills by default:
-    require.resolve('../jest/polyfills'),
-    // Include an alternative client for WebpackDevServer. A client's job is to
-    // connect to WebpackDevServer by a socket and get notified about changes.
-    // When you save a file, the client will either apply hot updates (in case
-    // of CSS changes), or refresh the page (in case of JS changes). When you
-    // make a syntax error, this client will display a syntax error overlay.
-    // Note: instead of the default WebpackDevServer client, we use a custom one
-    // to bring better experience for Create React App users. You can replace
-    // the line below with these two lines if you prefer the stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
-    // Finally, this is your app's code:
-    paths.appIndexJs
-    // We include the app code last so that if there is a runtime error during
-    // initialization, it doesn't blow up the WebpackDevServer client, and
-    // changing JS code would still trigger a refresh.
-  ],
+  entry: {
+    index: paths.appIndexJs
+  },
   output: {
     // Add /* filename */ comments to generated require()s in the output.
-    pathinfo: true,
-    filename: 'index.js',
+    path: paths.appBuild,
+    filename: '[name].js',
     library: 'The-movie-db-store',
     libraryTarget: 'umd'
   },
   resolve: {
-    // This allows you to set a fallback for where Webpack should look for modules.
-    // We placed these paths second because we want `node_modules` to "win"
-    // if there are any conflicts. This matches Node resolution mechanism.
-    // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: [ 'node_modules', paths.appNodeModules ].concat(
-      // It is guaranteed to exist because we tweak it in `env.js`
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
-    ),
-    // These are the reasonable defaults supported by the Node ecosystem.
-    // We also include JSX as a common component filename extension to support
-    // some tools, although we do not recommend using it, see:
-    // https://github.com/facebookincubator/create-react-app/issues/290
-    // `web` extension prefixes have been added for better support
-    // for React Native Web.
     extensions: [ '.web.js', '.mjs', '.js', '.json' ],
     alias: {
       '#': path.resolve(__dirname, src),
@@ -86,28 +55,27 @@ module.exports = {
     ]
   },
   module: {
-    strictExportPresence: true,
     rules: [
-      // TODO: Disable require.ensure as it's not a standard language feature.
-      // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
-      // { parser: { requireEnsure: false } },
-
-      // First, run the linter.
-      // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
+        include: paths.appSrc,
         use: [
           {
+            loader: require.resolve('babel-loader'),
+            options: {
+              compact: process.env.NODE_ENV === 'production',
+              cacheDirectory: process.env.NODE_ENV === 'development'
+            }
+          },
+          {
+            loader: require.resolve('eslint-loader'),
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint')
-              
-            },
-            loader: require.resolve('eslint-loader')
+            }
           }
-        ],
-        include: paths.appSrc
+        ]
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -123,19 +91,6 @@ module.exports = {
             options: {
               limit: 10000,
               name: 'static/media/[name].[hash:8].[ext]'
-            }
-          },
-          // Process JS with Babel.
-          {
-            test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
-              cacheDirectory: true
             }
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -161,22 +116,7 @@ module.exports = {
     ]
   },
   plugins: [
-    // Add module names to factory functions so they appear in browser profiler.
-    new webpack.NamedModulesPlugin(),
-    // Makes some environment variables available to the JS code, for example:
-    // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
-    new webpack.DefinePlugin(env.stringified),
-    // This is necessary to emit hot updates (currently CSS only):
-    new webpack.HotModuleReplacementPlugin(),
-    // Watcher doesn't work well if you mistype casing in a path so we use
-    // a plugin that prints an error when you attempt to do this.
-    // See https://github.com/facebookincubator/create-react-app/issues/240
-    new CaseSensitivePathsPlugin(),
-    // If you require a missing module and then `npm install` it, you still have
-    // to restart the development server for Webpack to discover it. This plugin
-    // makes the discovery automatic so you don't have to restart.
-    // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules)
+    new webpack.DefinePlugin(env.stringified)
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
@@ -191,6 +131,6 @@ module.exports = {
   // splitting or minification in interest of speed. These warnings become
   // cumbersome.
   performance: {
-    hints: false
+    hints: 'warning'
   }
 }
