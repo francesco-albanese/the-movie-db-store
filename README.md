@@ -1,3 +1,3 @@
-##The Movie DB Store
+##The Movie DB React app fetching module
 
-A package used to create the Redux store and reducers, in order to be used in the main application.
+A package used to fetch data from TMDB APIs and also from Contentful CMS.

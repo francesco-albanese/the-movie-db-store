@@ -36,7 +36,7 @@ module.exports = {
     // Add /* filename */ comments to generated require()s in the output.
     path: paths.appBuild,
     filename: '[name].js',
-    library: 'The-movie-db-store',
+    library: 'The-movie-db-fetching',
     libraryTarget: 'umd'
   },
   resolve: {

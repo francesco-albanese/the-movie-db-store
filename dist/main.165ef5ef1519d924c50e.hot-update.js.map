@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://The-movie-db-store/./src/index.js"],"names":[],"mappings":";;;;;;;;;;AAAA;AAAA;AAAA;AAAA","file":"main.165ef5ef1519d924c50e.hot-update.js","sourcesContent":["export { default } from './store'"],"sourceRoot":""}
