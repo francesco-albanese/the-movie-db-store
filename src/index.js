@@ -1,1 +1,2 @@
-export { default } from './store'
+export * from '#reducers'
+export { default } from '#store'
