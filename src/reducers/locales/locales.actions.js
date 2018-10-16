@@ -27,13 +27,15 @@ const requestFail = error => {
 }
 
 export const fetchAllLocales = () => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(requestInProgress())
-    return getLocales()
-      .then(result => dispatch(requestSuccessful(result.data)))
-      .catch(error => { 
-        dispatch(requestFail(error))
-        throw error 
-      })
+
+    try {
+      const { data } = await getLocales()
+      dispatch(requestSuccessful(data))
+    } catch (e) {
+      dispatch(requestFail(e))
+      throw e
+    }
   }
 }
