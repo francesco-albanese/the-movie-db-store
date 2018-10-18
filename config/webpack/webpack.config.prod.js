@@ -45,7 +45,8 @@ module.exports = {
     extensions: [ '.web.js', '.mjs', '.js', '.json' ],
     alias: {
       '#': path.resolve(__dirname, src),
-      '#store': path.resolve(__dirname, src, 'store')
+      '#store': path.resolve(__dirname, src, 'store'),
+      '#reducers': path.resolve(__dirname, src, 'reducers')
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
