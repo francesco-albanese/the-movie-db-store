@@ -3,9 +3,9 @@ import {
   REQUEST_STATUS_SUCCESS,
   REQUEST_STATUS_FAIL,
   SET_ACTIVE_ENTRY
-} from './template.const'
+} from './pages.const'
 
-import { getLayout } from '@themoviedb/the-movie-db-fetching'
+import { getPages } from '@themoviedb/the-movie-db-fetching'
 
 const requestInProgress = () => {
   return {
@@ -27,19 +27,19 @@ const requestFail = error => {
   }
 }
 
-const setActiveTemplateSuccess = template => {
+const setActivePageSuccess = page => {
   return {
     type: SET_ACTIVE_ENTRY,
-    payload: template
+    payload: page
   }
 }
 
-export const fetchAllTemplates = () => {
+export const fetchAllPages = () => {
   return async dispatch => {
     dispatch(requestInProgress())
 
     try {
-      const { data } = await getLayout()
+      const { data } = await getPages()
       dispatch(requestSuccessful(data))
     } catch (e) {
       dispatch(requestFail(e))
@@ -48,8 +48,8 @@ export const fetchAllTemplates = () => {
   }
 }
 
-export const setActiveTemplate = template => {
+export const setActivePage = page => {
   return dispatch => {
-    dispatch(setActiveTemplateSuccess(template))
+    dispatch(setActivePageSuccess(page))
   }
 }
