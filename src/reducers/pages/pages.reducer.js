@@ -2,8 +2,9 @@ import {
   INITIAL_STATE, 
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS, 
-  REQUEST_STATUS_FAIL 
-} from './locales.const'
+  REQUEST_STATUS_FAIL,
+  SET_ACTIVE_ENTRY
+} from './pages.const'
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -24,8 +25,14 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_STATUS_SUCCESS:
       return {
         ...state,
-        allLocales: action.payload,
+        allPages: action.payload,
         fetchingInProgress: false
+      }
+
+    case SET_ACTIVE_ENTRY:
+      return {
+        ...state,
+        activePage: action.payload
       }
 
     default:

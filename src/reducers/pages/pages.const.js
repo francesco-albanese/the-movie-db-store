@@ -1,8 +1,8 @@
-export const NAMESPACE = 'TEMPLATE'
+export const NAMESPACE = 'PAGES'
 
 export const INITIAL_STATE = {
-  activeTemplate: {},
-  allTemplates: [],
+  activePage: {},
+  allPages: [],
   errors: [],
   fetchingInProgress: false
 }

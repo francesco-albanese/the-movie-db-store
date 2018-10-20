@@ -3,7 +3,7 @@ export const NAMESPACE = 'LOCALES'
 export const INITIAL_STATE = {
   activeLocale: {},
   allLocales: [],
-  errors: {},
+  errors: [],
   fetchingInProgress: false
 }
 
