@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_STATUS_FAIL:
       return {
         ...state,
-        errors: [...state.errors, action.error],
+        errors: [ ...state.errors, action.error ],
         fetchingInProgress: false
       }
 
