@@ -4,7 +4,7 @@ export const INITIAL_STATE = {
   activeLocale: {},
   allLocales: [],
   errors: [],
-  fetchingInProgress: false
+  fetchingInProgress: true
 }
 
 export const REQUEST_IN_PROGRESS = `${ NAMESPACE }/REQUEST_IN_PROGRESS`
