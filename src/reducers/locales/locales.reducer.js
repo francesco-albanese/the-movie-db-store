@@ -2,7 +2,8 @@ import {
   INITIAL_STATE, 
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS, 
-  REQUEST_STATUS_FAIL 
+  REQUEST_STATUS_FAIL,
+  SET_ACTIVE_LOCALE
 } from './locales.const'
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,10 +23,19 @@ export default (state = INITIAL_STATE, action) => {
       }
 
     case REQUEST_STATUS_SUCCESS:
+      const { activeLocale, response } = action.payload
+
       return {
         ...state,
-        allLocales: action.payload,
+        activeLocale,
+        allLocales: response,
         fetchingInProgress: false
+      }
+
+    case SET_ACTIVE_LOCALE:
+      return {
+        ...state,
+        activeLocale: action.payload
       }
 
     default:
