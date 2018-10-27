@@ -1,8 +1,7 @@
 import {
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS,
-  REQUEST_STATUS_FAIL,
-  SET_ACTIVE_ENTRY
+  REQUEST_STATUS_FAIL
 } from './template.const'
 
 import { getLayout } from '@themoviedb/the-movie-db-fetching'
@@ -27,13 +26,6 @@ const requestFail = error => {
   }
 }
 
-const setActiveTemplateSuccess = template => {
-  return {
-    type: SET_ACTIVE_ENTRY,
-    payload: template
-  }
-}
-
 export const fetchAllTemplates = () => {
   return async dispatch => {
     dispatch(requestInProgress())
@@ -45,11 +37,5 @@ export const fetchAllTemplates = () => {
       dispatch(requestFail(e))
       throw e
     }
-  }
-}
-
-export const setActiveTemplate = template => {
-  return dispatch => {
-    dispatch(setActiveTemplateSuccess(template))
   }
 }
