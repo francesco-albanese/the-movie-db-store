@@ -2,8 +2,7 @@ import {
   INITIAL_STATE, 
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS, 
-  REQUEST_STATUS_FAIL,
-  SET_ACTIVE_ENTRY 
+  REQUEST_STATUS_FAIL
 } from './template.const'
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,12 +26,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         allTemplates: action.payload,
         fetchingInProgress: false
-      }
-
-    case SET_ACTIVE_ENTRY:
-      return {
-        ...state,
-        activeTemplate: action.payload
       }
 
     default:
