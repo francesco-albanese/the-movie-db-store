@@ -1,7 +1,6 @@
 export const NAMESPACE = 'TEMPLATE'
 
 export const INITIAL_STATE = {
-  activeTemplate: {},
   allTemplates: [],
   errors: [],
   fetchingInProgress: true
