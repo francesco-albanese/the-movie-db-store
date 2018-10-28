@@ -11,11 +11,6 @@ import { getLocales } from '@themoviedb/the-movie-db-fetching'
 
 const getLocaleFromUrl = () => {
   let splitPath = window.location.pathname.split('/')
-  
-  if (isEmpty(splitPath[ 1 ])) {
-    window.history.replaceState(null, 'en', '/en')
-    splitPath = window.location.pathname.split('/')
-  }
 
   return splitPath[ 1 ]
 }
