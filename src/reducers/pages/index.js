@@ -1,4 +1,4 @@
-export { NAMESPACE } from './pages.const'
+export { NAMESPACE as PAGES_NAMESPACE } from './pages.const'
 export { fetchAllPages, setActivePage } from './pages.actions'
 export { 
   getAllPages, 
