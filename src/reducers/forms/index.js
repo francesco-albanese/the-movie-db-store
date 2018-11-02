@@ -1,1 +1,1 @@
-export { NAMESPACE } from './forms.const'
+export { NAMESPACE as FORM_NAMESPACE } from './forms.const'
