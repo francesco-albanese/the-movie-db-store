@@ -1,1 +1,1 @@
-export const NAMESPACE = 'FORM'
+export const NAMESPACE = 'form'
