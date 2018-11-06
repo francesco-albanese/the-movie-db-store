@@ -5,6 +5,8 @@ import {
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS, 
   REQUEST_STATUS_FAIL,
+  SEARCH_MOVIES_IN_PROGRESS,
+  SET_IS_FILTERING,
   SET_MOVIE_CATEGORY
 } from './movies.const'
 
@@ -16,44 +18,65 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         genres: action.payload,
         filtering: false,
-        fetchingInProgress: false
+        fetchingInProgress: false,
+        searching: false
       }
 
     case FILTER_MOVIE_SUCCESS:
       return {
         ...state,
-        filtering: true,
-        filteredMovies: action.payload
+        filtering: false,
+        filteredMovies: action.payload,
+        searching: false
       }
 
     case REQUEST_IN_PROGRESS:
       return {
         ...state,
-        fetchingInProgress: true
+        fetchingInProgress: true,
+        filtering: false,
+        searching: false
       }
 
     case REQUEST_STATUS_FAIL:
       return {
         ...state,
         errors: [ ...state.errors, action.error ],
-        fetchingInProgress: false
+        fetchingInProgress: false,
+        filtering: false,
+        searching: false,
+        searchMoviesInProgress: false
       }
 
     case REQUEST_STATUS_SUCCESS:
       return {
         ...state,
         allMovies: action.payload,
-        filteredMovies: [],
+        fetchingInProgress: false,
+        movieCategory: '',
+        searchMoviesInProgress: false
+      }
+
+    case SEARCH_MOVIES_IN_PROGRESS: 
+      return {
+        ...state,
         filtering: false,
-        fetchingInProgress: false
+        searchMoviesInProgress: true
+      }
+
+    case SET_IS_FILTERING:
+      return {
+        ...state,
+        filtering: true,
+        searching: false
       }
 
     case SET_MOVIE_CATEGORY:
       return {
         ...state,
         filtering: false,
-        filteredMovies: [],
-        movieCategory: action.payload
+        movieCategory: action.payload,
+        searching: false
       }
 
     default:
