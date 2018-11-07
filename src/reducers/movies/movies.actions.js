@@ -1,15 +1,23 @@
+import { isEmpty } from 'lodash-es'
+
 import {
   FETCH_GENRES_SUCCESS,
   FILTER_MOVIE_SUCCESS,
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS,
   REQUEST_STATUS_FAIL,
+  SEARCH_MOVIES_IN_PROGRESS,
+  SET_IS_FILTERING,
   SET_MOVIE_CATEGORY
 } from './movies.const'
 
-import { getGenres, getMovies } from '@themoviedb/the-movie-db-fetching'
+import { 
+  getGenres, 
+  getMovies,
+  getMoviesByQuery 
+} from '@themoviedb/the-movie-db-fetching'
 
-import { filterAllMoviesByGenre } from './movies.selectors'
+import { filterAllMoviesByGenre, filterAllMoviesById } from './movies.selectors'
 
 const requestInProgress = () => {
   return {
@@ -45,13 +53,27 @@ const filteredMoviesSuccess = payload => {
   }
 }
 
+const isFiltering = () => {
+  return {
+    type: SET_IS_FILTERING
+  }
+}
+
+const searchInProgress = () => {
+  return {
+    type: SEARCH_MOVIES_IN_PROGRESS
+  }
+}
+
 export const fetchAllMovies = (category = 'nowPlaying', language = 'en') => {
-  return async dispatch => {
+  return async(dispatch, getState) => {
     dispatch(requestInProgress())
 
     try {
       const data = await getMovies(category, language)
       dispatch(requestSuccessful(data))
+      const filteredMovies = filterAllMoviesByGenre(getState())
+      dispatch(filteredMoviesSuccess(filteredMovies))
     } catch (e) {
       dispatch(requestFail(e))
       throw e
@@ -83,8 +105,29 @@ export const fetchGenres = (language = 'en') => {
 export const filterMoviesById = id => {
 
   return (dispatch, getState) => {
+    dispatch(isFiltering())
+    const filteredMovies = filterAllMoviesById(id)(getState())(id)
+    dispatch(requestSuccessful(filteredMovies))
+  }
+}
 
-    const filteredMovies = filterAllMoviesByGenre(id)(getState())(id)
-    dispatch(filteredMoviesSuccess(filteredMovies))
+export const fetchMoviesByQuery = (language = 'en', query = '') => {
+  return async(dispatch, getState) => {
+
+    try {
+      if (!isEmpty(query)) {
+        dispatch(searchInProgress())
+
+        const { data } = await getMoviesByQuery(language, query)
+        dispatch(requestSuccessful(data))
+        
+        const filteredMovies = filterAllMoviesByGenre(getState())
+        return dispatch(filteredMoviesSuccess(filteredMovies))
+      }
+      return false
+    } catch (e) {
+      dispatch(requestFail(e))
+      throw e
+    }
   }
 }
