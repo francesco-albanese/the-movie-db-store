@@ -53,7 +53,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         allMovies: action.payload,
         fetchingInProgress: false,
-        movieCategory: '',
         searchMoviesInProgress: false
       }
 
@@ -61,6 +60,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         filtering: false,
+        movieCategory: '',
         searchMoviesInProgress: true
       }
 
@@ -68,6 +68,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         filtering: true,
+        movieCategory: '',
         searching: false
       }
 
