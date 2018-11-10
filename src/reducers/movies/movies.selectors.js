@@ -11,6 +11,7 @@ export const getSearchingInProgress = state => state[ NAMESPACE ].searchMoviesIn
 export const getFilteredMovies = state => state[ NAMESPACE ].filteredMovies
 export const getMoviesFetchingInprogress = state => state[ NAMESPACE ].fetchingInProgress
 export const getMovieCategory = state => state[ NAMESPACE ].movieCategory
+export const getMovieDetails = state => state[ NAMESPACE ].movieDetails
 
 export const filterAllMoviesByGenre = createSelector(
   [ getAllGenres, getAllMovies ],
