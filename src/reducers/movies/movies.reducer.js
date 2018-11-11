@@ -1,6 +1,7 @@
 import { 
   INITIAL_STATE, 
   FETCH_GENRES_SUCCESS,
+  FETCH_MOVIE_BY_ID_SUCCESS,
   FILTER_MOVIE_SUCCESS,
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS, 
@@ -20,6 +21,13 @@ export default (state = INITIAL_STATE, action) => {
         filtering: false,
         fetchingInProgress: false,
         searching: false
+      }
+
+    case FETCH_MOVIE_BY_ID_SUCCESS:
+      return {
+        ...state,
+        movieDetails: action.payload,
+        fetchingInProgress: false
       }
 
     case FILTER_MOVIE_SUCCESS:

@@ -2,6 +2,7 @@ import { isEmpty } from 'lodash-es'
 
 import {
   FETCH_GENRES_SUCCESS,
+  FETCH_MOVIE_BY_ID_SUCCESS,
   FILTER_MOVIE_SUCCESS,
   REQUEST_IN_PROGRESS,
   REQUEST_STATUS_SUCCESS,
@@ -13,6 +14,7 @@ import {
 
 import { 
   getGenres, 
+  getMovieById,
   getMovies,
   getMoviesByQuery 
 } from '@themoviedb/the-movie-db-fetching'
@@ -62,6 +64,13 @@ const isFiltering = () => {
 const searchInProgress = () => {
   return {
     type: SEARCH_MOVIES_IN_PROGRESS
+  }
+}
+
+const fetchMovieSuccess = payload => {
+  return {
+    type: FETCH_MOVIE_BY_ID_SUCCESS,
+    payload
   }
 }
 
@@ -125,6 +134,20 @@ export const fetchMoviesByQuery = (language = 'en', query = '') => {
         return dispatch(filteredMoviesSuccess(filteredMovies))
       }
       return false
+    } catch (e) {
+      dispatch(requestFail(e))
+      throw e
+    }
+  }
+}
+
+export const fetchMovieById = (movie_id, language = 'en') => {
+  return async dispatch => {
+    dispatch(requestInProgress())
+
+    try {
+      const data = await getMovieById(movie_id, language)
+      dispatch(fetchMovieSuccess(data))
     } catch (e) {
       dispatch(requestFail(e))
       throw e

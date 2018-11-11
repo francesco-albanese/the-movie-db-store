@@ -2,6 +2,7 @@ export { NAMESPACE as MOVIES_NAMESPACE } from './movies.const'
 export { 
   fetchAllMovies,
   fetchGenres, 
+  fetchMovieById,
   fetchMoviesByQuery,
   filterMoviesById,
   setMovieCategory 
@@ -14,6 +15,7 @@ export {
   getFilteredMovies,
   getMoviesFetchingInprogress,
   getMovieCategory,
+  getMovieDetails,
   getSearchingInProgress,
   filterAllMoviesByGenre
 } from './movies.selectors'
